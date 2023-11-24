@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class LoginScreen extends JFrame {
     private JPanel panel1;
@@ -14,9 +15,12 @@ public class LoginScreen extends JFrame {
     private JButton signInButton;
     private JLabel Feedback;
 
+    public ArrayList<Account> accounts = new ArrayList<>();
+    LoginScreen thisLoginscreen;
     LoginScreen() {
 
        super("Login");
+       thisLoginscreen = this;
        this.setContentPane(this.panel1);
        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        this.pack();
@@ -38,7 +42,7 @@ public class LoginScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 setVisible(false);
-                CreateScreen createscreen = new CreateScreen();
+                CreateScreen createscreen = new CreateScreen(thisLoginscreen);
                 createscreen.setVisible(true);
 
             }
@@ -47,23 +51,30 @@ public class LoginScreen extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Account account = new Account("blash","blash");
+                Account account = new Account("admin","admin");
+                accounts.add(account);
 
+                boolean found = false;
+                for(int i = 0; i<accounts.size(); i++) {
+                    Account acc = accounts.get(i);
+                    if(acc.getUserName().equals(userNameField.getText()) && acc.getPassWord().equals(new String (passWordField.getPassword()))) {
+                        found = true;
+                        MainMenu mainMenu = new MainMenu(thisLoginscreen);
+                        mainMenu.userNameTextArea.setText("User: "+thisLoginscreen.accounts.get(i).getUserName());
+                        mainMenu.balanceTextArea.setText("Balance: "+Integer.toString(thisLoginscreen.accounts.get(i).getBalance()));
+                        setVisible(false);
+                        mainMenu.setVisible(true);
 
-                if(true) {
-
-                    MainMenu mainMenu = new MainMenu();
-                    setVisible(false);
-                    mainMenu.setVisible(true);
-
+                    }
                 }
-                else {
+                if (found == false){
 
                     Feedback.setText("Wrong username and/or password!");
-                    System.out.println(account.accounts.contains(userNameField.getText())+account.getPassWord());
 
 
-                } }
+
+                }
+            }
 
 
 

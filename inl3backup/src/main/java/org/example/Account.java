@@ -1,7 +1,5 @@
 package org.example;
 
-import java.util.ArrayList;
-
 public class Account {
 
     private String userName;
@@ -14,7 +12,6 @@ public class Account {
 
     }
 
-    public ArrayList<Account> accounts = new ArrayList<>();
 
 
     public Account(String userName, String passWord) {

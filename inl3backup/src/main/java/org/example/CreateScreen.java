@@ -15,10 +15,13 @@ public class CreateScreen extends JFrame{
     private JLabel userName;
 
     private JLabel passWord;
+    LoginScreen loginScreen;
+    private CreateScreen thisCreateScreen = this;
 
-    CreateScreen() {
+    CreateScreen(LoginScreen _loginScreen) {
 
         super("Create");
+        loginScreen = _loginScreen;
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -39,11 +42,10 @@ public class CreateScreen extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                Account account = new Account(textField1.getText(), passwordField1.getText());
-                account.accounts.add(account);
+                Account account = new Account(textField1.getText(),new String (passwordField1.getPassword()));
+                loginScreen.accounts.add(account);
                 System.out.println(account.getDescription());
-                LoginScreen loginScreen = new LoginScreen();
-                setVisible(false);
+                thisCreateScreen.dispose();
                 loginScreen.setVisible(true);
 
             }
