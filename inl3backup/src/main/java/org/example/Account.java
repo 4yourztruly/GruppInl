@@ -1,14 +1,21 @@
 package org.example;
 
+import java.util.ArrayList;
+
 public class Account {
 
     private String userName;
     private String passWord;
-    private int balance;
+    private boolean admin;
+
+    ArrayList<Savings>savingsArrayList = new ArrayList<>();
+
+    Savings savings = new Savings("Konto");
+
 
     public String getDescription() {
 
-        return userName+","+passWord+","+balance;
+        return userName+","+passWord;
 
     }
 
@@ -17,7 +24,8 @@ public class Account {
     public Account(String userName, String passWord) {
         this.userName = userName;
         this.passWord = passWord;
-        this.balance = 0;
+        savingsArrayList.add(savings);
+        this.admin = false;
     }
 
     public String getUserName() {
@@ -36,11 +44,19 @@ public class Account {
         this.passWord = passWord;
     }
 
-    public int getBalance() {
-        return balance;
+    public ArrayList<Savings> getSavingsArrayList() {
+        return savingsArrayList;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public void setSavingsArrayList(ArrayList<Savings> savingsArrayList) {
+        this.savingsArrayList = savingsArrayList;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

@@ -52,6 +52,7 @@ public class LoginScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 Account account = new Account("admin","admin");
+                account.setAdmin(true);
                 accounts.add(account);
 
                 boolean found = false;
@@ -59,9 +60,7 @@ public class LoginScreen extends JFrame {
                     Account acc = accounts.get(i);
                     if(acc.getUserName().equals(userNameField.getText()) && acc.getPassWord().equals(new String (passWordField.getPassword()))) {
                         found = true;
-                        MainMenu mainMenu = new MainMenu(thisLoginscreen);
-                        mainMenu.userNameTextArea.setText("User: "+thisLoginscreen.accounts.get(i).getUserName());
-                        mainMenu.balanceTextArea.setText("Balance: "+Integer.toString(thisLoginscreen.accounts.get(i).getBalance()));
+                        MainMenu mainMenu = new MainMenu(thisLoginscreen, acc);
                         setVisible(false);
                         mainMenu.setVisible(true);
 
