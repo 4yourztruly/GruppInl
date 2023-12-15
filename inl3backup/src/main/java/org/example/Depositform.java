@@ -13,11 +13,13 @@ public class Depositform extends JFrame{
     private JButton depositButton;
     private JTextField textField1;
     private JButton withdrawButton;
+    private JLabel warningLabel;
+    private JLabel headsLabel;
     LoginScreen loginScreen;
     MainMenu mainMenu;
     Account account;
     Depositform(LoginScreen _loginscreen, MainMenu _mainMenu, Account account_) {
-        super("Savings");
+        super("Deposit");
         loginScreen = _loginscreen;
         mainMenu = _mainMenu;
         account = account_;
@@ -48,14 +50,20 @@ public class Depositform extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = list.getSelectedIndex();
+                if(i>-1) {
                 Savings savings = account.savingsArrayList.get(i);
                 account.savingsArrayList.get(i).setBalance(savings.getBalance()+Integer.parseInt(textField1.getText()));
                 listmodel.clear();
                 for(int d = 0; d < account.getSavingsArrayList().size(); d++) {
                     listmodel.addElement(account.savingsArrayList.get(d));
 
+                } }else {
+                        warningLabel.setText("Please select a line");
                 }
             }
+
+
+
         });
         textField1.addActionListener(new ActionListener() {
             @Override
@@ -67,13 +75,28 @@ public class Depositform extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int i = list.getSelectedIndex();
-                Savings savings = account.savingsArrayList.get(i);
-                account.savingsArrayList.get(i).setBalance(savings.getBalance()-Integer.parseInt(textField1.getText()));
-                listmodel.clear();
-                for(int d = 0; d < account.getSavingsArrayList().size(); d++) {
-                    listmodel.addElement(account.savingsArrayList.get(d));
+                if(i>-1) {
 
+                for(int d = 0; d < account.getSavingsArrayList().size(); d++) {
+                Savings savings = account.savingsArrayList.get(i);
+                if(Integer.parseInt(textField1.getText()) > account.savingsArrayList.get(i).getBalance()) {
+                    warningLabel.setText("Can't withdraw that much");
                 }
+                else {
+                    account.savingsArrayList.get(i).setBalance(savings.getBalance()-Integer.parseInt(textField1.getText()));
+                    listmodel.clear();
+                    for(int c = 0; c < account.getSavingsArrayList().size(); c++) {
+                        listmodel.addElement(account.savingsArrayList.get(c));
+
+                    } } }
+
+
+                } else {
+
+                    warningLabel.setText("Please select a line");
+                }
+
+
 
             }
         });

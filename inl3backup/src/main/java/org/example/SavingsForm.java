@@ -16,6 +16,7 @@ public class SavingsForm extends JFrame{
     private JTextField enterNameTextField;
     public JTextPane textPane1;
     private JList list;
+    private JLabel headsLabel;
     private LoginScreen loginScreen;
     private MainMenu mainMenu;
     private Account account;
@@ -52,13 +53,17 @@ public class SavingsForm extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                if(enterNameTextField.getText().isBlank()) {
+
+                    headsLabel.setText("Please enter a name!");
+                } else {
                 Savings savings = new Savings(enterNameTextField.getText());
                 account.getSavingsArrayList().add(savings);
                 listmodel.clear();
                 for(int i = 0; i < account.getSavingsArrayList().size(); i++) {
                     listmodel.addElement(account.savingsArrayList.get(i));
 
-                }
+                } }
             }
         });
         enterNameTextField.addKeyListener(new KeyAdapter() {
@@ -72,9 +77,13 @@ public class SavingsForm extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 int i = list.getSelectedIndex();
+                if(i>-1) {
                 Savings savings = account.savingsArrayList.get(i);
                 account.savingsArrayList.remove(savings);
                 listmodel.remove(i);
-            }
+            } else {
+                    headsLabel.setText("Please select a line");
+
+                }}
         });
     }}

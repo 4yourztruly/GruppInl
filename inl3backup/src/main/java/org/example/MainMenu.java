@@ -12,10 +12,9 @@ public class MainMenu extends JFrame{
     private JTextArea userNameTextArea;
     private JTextArea balanceTextArea;
     private JButton backButton;
-    private JButton button1;
     private JButton depositWithdrawButton;
-    private JButton button3;
     private JButton savingsButton;
+    private JButton adminButton;
 
     private LoginScreen loginScreen;
     MainMenu thisMainMenu = this;
@@ -25,6 +24,11 @@ public class MainMenu extends JFrame{
         super("Main Menu");
         loginScreen = _loginscreen;
         account = account_;
+        if(account.isAdmin()) {
+            adminButton.setVisible(true);
+        } else {
+            adminButton.setVisible(false);
+        }
         this.setContentPane(this.panel1);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -61,6 +65,16 @@ public class MainMenu extends JFrame{
                 depositform.setVisible(true);
             }
         });
+        adminButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdminPanel adminPanel = new AdminPanel(thisMainMenu);
+                setVisible(false);
+                adminPanel.setVisible(true);
+
+            }
+        });
+
     }
 
     public JTextArea getUserNameTextArea() {
